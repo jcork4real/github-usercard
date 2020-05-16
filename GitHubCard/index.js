@@ -24,9 +24,10 @@ axios
    .get('https://api.github.com/users/jcork4real/followers')
    .then(response => {
     let cardsElement = document.querySelector('.cards');
+  
      response.data.forEach(item =>{
       const gitFriendProfile =  gitCard(item)
-    
+      
       cardsElement.append(gitFriendProfile);
     })
   
@@ -122,6 +123,19 @@ bioElement.textContent = `Bio: ${someObject.bio}`;
 cardDiv.append(imgElement, cardInfo, nameElement, usernameElement, locationElement, profileElement, 
                  followersElement, followingElement, bioElement
 );
+
+
+// clean up undefined statements on friend cards
+
+if (someObject.name !== 'Jarone McCorkle'){
+  locationElement.style.display = 'none'
+  followersElement.style.display = 'none'
+  followingElement.style.display = 'none';
+  followingElement.style.display = 'none';
+  bioElement.style.display = 'none';
+  profileElement.textContent= '';
+}
+
 profileElement.appendChild(addressElement);
   return cardDiv;
 
