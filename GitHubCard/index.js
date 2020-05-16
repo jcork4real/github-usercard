@@ -4,13 +4,40 @@
     https://api.github.com/users/<your name>
 */
 
-/*
-  STEP 2: Inspect and study the data coming back, this is YOUR
-    github info! You will need to understand the structure of this
-    data in order to use it to build your component function
 
-    Skip to STEP 3.
-*/
+const cardsElement = document.getElementsByClassName('cards')
+
+
+axios
+  .get('https://api.github.com/users/jcork4real')
+  // .then( res => console.log(res))
+  // .then(res =>{
+  //     res.data.name.forEach(item => {
+  //       let newPerson = card(item);
+  //      cardsElement.append(newPerson);
+  //     })
+  // })
+
+
+  .then(response => {
+        card(response.data);
+  })
+
+  // .catch(error => {
+  //   console.log('Data not returned', error)
+  // })
+
+//   .catch( error => {
+//     console.log("Error:", error);
+// });
+
+// /*
+//   STEP 2: Inspect and study the data coming back, this is YOUR
+//     github info! You will need to understand the structure of this
+//     data in order to use it to build your component function
+
+//     Skip to STEP 3.
+// */
 
 /*
   STEP 4: Pass the data received from Github into your function,
@@ -49,6 +76,54 @@ const followersArray = [];
       </div>
     </div>
 */
+
+
+const card = (someObject) => {
+//create elements
+// const cardDiv = document.createElement('div');
+// const imgElement = document.createElement('img');
+// const cardInfo = document.createElement('div');
+// const nameElement = document.createElement('h3');
+// const usernameElement = document.createElement('p');
+// const locationElement = document.createElement('p');
+// const profileElement = document.createElement('p');
+// const addressElement = document.createElement('a');
+// const followersElement = document.createElement('p');
+// const followingElement = document.createElement('p');
+// const bioElement = document.createElement('p');
+
+// //set attributes and create classes
+
+// cardDiv.classList.add('card');
+// imgElement.setAttribute('src', someObject[avatar_url]);
+// cardInfo.classList.add('card-info');
+// nameElement.classList.add('name');
+// usernameElement.classList.add('username');
+// addressElement.setAttribute('href', someObject[data][html_url]);
+
+// //Add text content
+// nameElement.textContent = someObject[data][name];
+// usernameElement.textContent = someObject[data][login];
+// locationElement.textContent = `Location: ${someObject[data][location]}`;
+// profileElement.textContent = `Profile:`;
+// followersElement.textContent = `Followers: ${someObject[data][followers]}`;
+// followingElement.textContent = `Following: ${someObject[data][following]}`;
+// bioElement.textContent = `Bio ${someObject[data][bio]}`;
+
+// //Append everything to cardDiv
+
+// cardDiv.append(imgElement, cardInfo, nameElement, usernameElement, locationElement, profileElement, 
+//                  followersElement, followersElement, bioElement
+// );
+
+// profileElement.appendChild(addressElement);
+
+  
+  return cardDiv;
+
+}
+
+
 
 /*
   List of LS Instructors Github username's:
