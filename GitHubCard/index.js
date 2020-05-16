@@ -4,13 +4,48 @@
     https://api.github.com/users/<your name>
 */
 
-/*
-  STEP 2: Inspect and study the data coming back, this is YOUR
-    github info! You will need to understand the structure of this
-    data in order to use it to build your component function
 
-    Skip to STEP 3.
-*/
+
+
+
+axios
+  .get('https://api.github.com/users/jcork4real')
+  .then(response => {
+    let cardsElement = document.querySelector('.cards');
+    const gitProfile = gitCard(response.data);
+      cardsElement.append(gitProfile)
+  })
+  .catch(error => {
+    console.log('Data not returned', error)
+   })
+
+
+axios
+   .get('https://api.github.com/users/jcork4real/followers')
+   .then(response => {
+    let cardsElement = document.querySelector('.cards');
+  
+     response.data.forEach(item =>{
+      const gitFriendProfile =  gitCard(item)
+      
+      cardsElement.append(gitFriendProfile);
+    })
+  
+   })
+   .catch(error => {
+     console.log('Data not returned', error)
+    })
+ 
+ 
+
+
+// /*
+//   STEP 2: Inspect and study the data coming back, this is YOUR
+//     github info! You will need to understand the structure of this
+//     data in order to use it to build your component function
+
+//     Skip to STEP 3.
+// */
 
 /*
   STEP 4: Pass the data received from Github into your function,
@@ -28,7 +63,7 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -49,6 +84,64 @@ const followersArray = [];
       </div>
     </div>
 */
+
+
+const gitCard = (someObject) => {
+//create elements
+const cardDiv = document.createElement('div');
+const imgElement = document.createElement('img');
+const cardInfo = document.createElement('div');
+const nameElement = document.createElement('h3');
+const usernameElement = document.createElement('p');
+const locationElement = document.createElement('p');
+const profileElement = document.createElement('p');
+const addressElement = document.createElement('a');
+const followersElement = document.createElement('p');
+const followingElement = document.createElement('p');
+const bioElement = document.createElement('p');
+
+// //set attributes and create classes
+
+cardDiv.classList.add('card');
+imgElement.setAttribute('src', someObject.avatar_url);
+cardInfo.classList.add('card-info');
+nameElement.classList.add('name');
+usernameElement.classList.add('username');
+addressElement.setAttribute('href', someObject.html_url);
+
+//Add text content
+nameElement.textContent = someObject.name;
+usernameElement.textContent = someObject.login;
+locationElement.textContent = `Location: ${someObject.location}`;
+profileElement.textContent = `Profile:`;
+followersElement.textContent = `Followers: ${someObject.followers}`;
+followingElement.textContent = `Following: ${someObject.following}`;
+bioElement.textContent = `Bio: ${someObject.bio}`;
+
+// //Append everything to cardDiv
+
+cardDiv.append(imgElement, cardInfo, nameElement, usernameElement, locationElement, profileElement, 
+                 followersElement, followingElement, bioElement
+);
+
+
+// clean up undefined statements on friend cards
+
+if (someObject.name !== 'Jarone McCorkle'){
+  locationElement.style.display = 'none'
+  followersElement.style.display = 'none'
+  followingElement.style.display = 'none';
+  followingElement.style.display = 'none';
+  bioElement.style.display = 'none';
+  profileElement.textContent= '';
+}
+
+profileElement.appendChild(addressElement);
+  return cardDiv;
+
+}
+
+
 
 /*
   List of LS Instructors Github username's:
