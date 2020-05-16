@@ -5,31 +5,38 @@
 */
 
 
-const cardsElement = document.getElementsByClassName('cards')
+
 
 
 axios
   .get('https://api.github.com/users/jcork4real')
-  // .then( res => console.log(res))
-  // .then(res =>{
-  //     res.data.name.forEach(item => {
-  //       let newPerson = card(item);
-  //      cardsElement.append(newPerson);
-  //     })
-  // })
-
-
   .then(response => {
-        card(response.data);
+    let cardsElement = document.querySelector('.cards');
+    const gitProfile = gitCard(response.data);
+      cardsElement.append(gitProfile)
   })
+  .catch(error => {
+    console.log('Data not returned', error)
+   })
 
-  // .catch(error => {
-  //   console.log('Data not returned', error)
-  // })
 
-//   .catch( error => {
-//     console.log("Error:", error);
-// });
+axios
+   .get('https://api.github.com/users/jcork4real/followers')
+   .then(response => {
+    let cardsElement = document.querySelector('.cards');
+     response.data.forEach(item =>{
+      const gitFriendProfile =  gitCard(item)
+    
+      cardsElement.append(gitFriendProfile);
+    })
+  
+   })
+   .catch(error => {
+     console.log('Data not returned', error)
+    })
+ 
+ 
+
 
 // /*
 //   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -55,7 +62,7 @@ axios
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -78,47 +85,44 @@ const followersArray = [];
 */
 
 
-const card = (someObject) => {
+const gitCard = (someObject) => {
 //create elements
-// const cardDiv = document.createElement('div');
-// const imgElement = document.createElement('img');
-// const cardInfo = document.createElement('div');
-// const nameElement = document.createElement('h3');
-// const usernameElement = document.createElement('p');
-// const locationElement = document.createElement('p');
-// const profileElement = document.createElement('p');
-// const addressElement = document.createElement('a');
-// const followersElement = document.createElement('p');
-// const followingElement = document.createElement('p');
-// const bioElement = document.createElement('p');
+const cardDiv = document.createElement('div');
+const imgElement = document.createElement('img');
+const cardInfo = document.createElement('div');
+const nameElement = document.createElement('h3');
+const usernameElement = document.createElement('p');
+const locationElement = document.createElement('p');
+const profileElement = document.createElement('p');
+const addressElement = document.createElement('a');
+const followersElement = document.createElement('p');
+const followingElement = document.createElement('p');
+const bioElement = document.createElement('p');
 
 // //set attributes and create classes
 
-// cardDiv.classList.add('card');
-// imgElement.setAttribute('src', someObject[avatar_url]);
-// cardInfo.classList.add('card-info');
-// nameElement.classList.add('name');
-// usernameElement.classList.add('username');
-// addressElement.setAttribute('href', someObject[data][html_url]);
+cardDiv.classList.add('card');
+imgElement.setAttribute('src', someObject.avatar_url);
+cardInfo.classList.add('card-info');
+nameElement.classList.add('name');
+usernameElement.classList.add('username');
+addressElement.setAttribute('href', someObject.html_url);
 
-// //Add text content
-// nameElement.textContent = someObject[data][name];
-// usernameElement.textContent = someObject[data][login];
-// locationElement.textContent = `Location: ${someObject[data][location]}`;
-// profileElement.textContent = `Profile:`;
-// followersElement.textContent = `Followers: ${someObject[data][followers]}`;
-// followingElement.textContent = `Following: ${someObject[data][following]}`;
-// bioElement.textContent = `Bio ${someObject[data][bio]}`;
+//Add text content
+nameElement.textContent = someObject.name;
+usernameElement.textContent = someObject.login;
+locationElement.textContent = `Location: ${someObject.location}`;
+profileElement.textContent = `Profile:`;
+followersElement.textContent = `Followers: ${someObject.followers}`;
+followingElement.textContent = `Following: ${someObject.following}`;
+bioElement.textContent = `Bio: ${someObject.bio}`;
 
 // //Append everything to cardDiv
 
-// cardDiv.append(imgElement, cardInfo, nameElement, usernameElement, locationElement, profileElement, 
-//                  followersElement, followersElement, bioElement
-// );
-
-// profileElement.appendChild(addressElement);
-
-  
+cardDiv.append(imgElement, cardInfo, nameElement, usernameElement, locationElement, profileElement, 
+                 followersElement, followingElement, bioElement
+);
+profileElement.appendChild(addressElement);
   return cardDiv;
 
 }
